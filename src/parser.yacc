@@ -148,8 +148,24 @@ extern int  yywrap();
 
 %start Program
 
-%left ADD SUB AND OR
-%left MUL DIV NOT
+%left SEMICOLON
+%left COMMA
+%left WHILE
+%left IF
+%left ELSE
+%left ID
+%left ASSIGN
+%left OR
+%left AND
+%left LT LTE GT GTE EQ NEQ
+%left ADD SUB
+%left MUL DIV
+%right NOT
+%right LBRACKET
+%left RBRACKET
+%left DOT
+%right LPARENT
+%left RPARENT
 
 // rules, referring to definitions in /Spec/teapl.md
 %%
