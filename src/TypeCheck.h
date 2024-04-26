@@ -38,4 +38,5 @@ void check_ReturnStmt(std::ostream& out, aA_returnStmt rs);
 struct tc_type_{
     aA_type type;
     uint isVarArrFunc; // 0 for scalar, 1 for array, 2 for function
+    int array_len = -1;
 };
