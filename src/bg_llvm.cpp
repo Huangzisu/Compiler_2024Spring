@@ -67,15 +67,35 @@ Graph<L_block*>& Create_bg(list<L_block*>& bl) {
 
 // maybe useful
 static void DFS(Node<L_block*>* r, Graph<L_block*>& bg) {
+    r->color = 1; // Mark the node as visited
 
+    // Recursively visit all unvisited successor nodes
+    for (auto succ_num : *r->succ()) {
+        auto succ_node = bg.mynodes[succ_num];
+        if (succ_node->color != 1)
+            DFS(succ_node, bg);
+    }
 }
 
-void SingleSourceGraph(Node<L_block*>* r, Graph<L_block*>& bg,L_func*fun) {
-    //   Todo
+
+void SingleSourceGraph(Node<L_block*>* r, Graph<L_block*>& bg, L_func* fun) {
+    // Perform a DFS to mark all reachable nodes
+    DFS(r, bg);
+
+    int num = 0;
+    // Remove unreachable nodes from the function's blocks
+    for (auto block : fun->blocks) {
+        if (bg.mynodes[num]->color != 1) {
+            fun->blocks.remove(block);
+        }
+        num++;
+    }
 }
+
 
 void Show_graph(FILE* out,GRAPH::Graph<LLVMIR::L_block*>&bg){
     for(auto block_node:bg.mynodes){
+        fprintf(out, "%d\n",block_node.first);
         auto block=block_node.second->info;
         fprintf(out,"%s \n",block->label->name.c_str());
         fprintf(out,"pred  %zu  ",block_node.second->preds.size());
